@@ -1,0 +1,980 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>Newsnft — Premium NFT Gifts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Manrope:wght@400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+:root{
+  --bg:#05030f; --card:rgba(255,255,255,.045); --line:rgba(255,255,255,.09);
+  --gold:#ffc94d; --green:#2ee6a8; --red:#ff5d7a; --blue:#4d9cff; --vio:#7c5cff;
+  --tx:#f2f4ff; --tx2:#9aa4c4; --r:18px; --steel:#171519;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:'Manrope',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--tx);
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+}
+body::before{content:'';position:fixed;inset:0;z-index:-2;background:
+  radial-gradient(52% 38% at 18% -6%, rgba(124,92,255,.24), transparent 60%),
+  radial-gradient(46% 34% at 88% 4%, rgba(46,230,168,.13), transparent 55%),
+  radial-gradient(60% 46% at 50% 110%, rgba(255,201,77,.10), transparent 60%);}
+body::after{content:'';position:fixed;inset:0;z-index:-1;background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(255,255,255,.012) 3px 4px);pointer-events:none}
+h1,h2,h3,.unb{font-family:'Unbounded',system-ui,sans-serif}
+[data-act]{cursor:pointer;user-select:none;transition:transform .12s,opacity .12s,background .15s}
+[data-act]:active{transform:scale(.96)}
+img{-webkit-user-drag:none}
+.wrap{max-width:520px;margin:0 auto;padding:0 14px calc(96px + env(safe-area-inset-bottom))}
+
+/* ===== BOOT ===== */
+#boot{position:fixed;inset:0;z-index:99;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
+#boot .bl{font-family:'Unbounded';font-weight:900;font-size:26px;letter-spacing:.04em}
+#boot .bl b{color:var(--gold)}
+#boot .bs{width:26px;height:26px;border:2.5px solid rgba(255,255,255,.14);border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite}
+#boot .bt{color:var(--tx2);font-size:12.5px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ===== HEADER ===== */
+header{position:sticky;top:0;z-index:20;padding:calc(10px + env(safe-area-inset-top)) 14px 10px;
+  background:linear-gradient(180deg,rgba(4,3,5,.94),rgba(4,3,5,.8) 70%,transparent);backdrop-filter:blur(14px)}
+.hin{max-width:520px;margin:0 auto;display:flex;align-items:center;gap:10px}
+.logo{display:flex;flex-direction:column;line-height:1}
+.logo .l1{font-family:'Unbounded';font-weight:900;font-size:15px;letter-spacing:.05em}
+.logo .l1 b{color:var(--gold)}
+.logo .l2{font-size:8.5px;letter-spacing:.34em;color:var(--tx2);margin-top:3px}
+.hgrow{flex:1}
+.balchip{display:flex;align-items:center;gap:6px;background:var(--steel);border:1.5px solid var(--line);
+  border-radius:6px;padding:7px 8px 7px 12px}
+.balchip .bn{font-weight:800;font-size:13.5px}
+.balchip svg{display:block}
+.bplus{width:26px;height:26px;border-radius:999px;background:var(--gold);color:#141002;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;line-height:1}
+.bplus:active{transform:scale(.9)}
+.ver{position:fixed;top:5px;left:50%;transform:translateX(-50%);font-size:8.5px;color:rgba(154,164,196,.55);z-index:21;letter-spacing:.08em}
+
+/* ===== VIEWS ===== */
+.view{display:none;animation:fadein .25s}
+.view.on{display:block}
+@keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.vhead{margin:16px 2px 12px;display:flex;align-items:baseline;justify-content:space-between}
+.vhead h2{font-size:15.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+.vhead .sub{font-size:11.5px;color:var(--tx2)}
+
+/* ===== PRIZE CARD ===== */
+.pcard{background:var(--steel);border:1.5px solid var(--line);border-top:3px solid var(--gold);
+  border-radius:var(--r);padding:18px;box-shadow:0 14px 34px rgba(0,0,0,.6)}
+.prow{display:flex;gap:14px;align-items:center}
+.pimgbox{width:86px;height:86px;border-radius:8px;background:rgba(255,255,255,.05);border:1.5px solid var(--line);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
+.pimgbox img{width:100%;height:100%;object-fit:cover;border-radius:9px}
+.pinfo{flex:1;min-width:0}
+.pname{font-family:'Unbounded';font-weight:700;font-size:14px;margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.psub{font-size:11.5px;color:var(--tx2);margin-bottom:8px}
+.pfloor{display:flex;align-items:center;gap:6px;font-weight:800;font-size:16px;color:var(--gold)}
+.pfloor small{font-size:10.5px;font-weight:600;color:var(--tx2)}
+.pchangelink{margin-top:9px;font-size:11px;color:var(--blue);text-align:right}
+
+/* ===== REEL ===== */
+.reelwrap{margin-top:16px;position:relative;border-radius:8px;background:rgba(0,0,0,.55);
+  border:1.5px solid var(--line);overflow:hidden;padding:14px 0 16px;box-shadow:inset 0 2px 22px rgba(0,0,0,.6)}
+.reelwrap::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,var(--bg) 4%,transparent 16%,transparent 84%,var(--bg) 96%);pointer-events:none;z-index:3}
+.reelwrap.win{box-shadow:inset 0 2px 22px rgba(0,0,0,.6),0 0 0 2px rgba(34,217,143,.5),0 0 26px rgba(34,217,143,.35)}
+.reelwrap.lose{box-shadow:inset 0 2px 22px rgba(0,0,0,.6),0 0 0 2px rgba(255,47,78,.4),0 0 22px rgba(255,47,78,.25)}
+.reelmask{overflow:hidden}
+.reeltrack{display:flex;gap:6px;will-change:transform}
+.seg{width:66px;min-width:66px;height:86px;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+.seg.win{background:rgba(34,217,143,.14);border:1.5px solid var(--green)}
+.seg.win img{width:44px;height:44px;border-radius:5px;object-fit:cover}
+.seg.lose{background:rgba(255,255,255,.02);border:1.5px solid rgba(255,255,255,.1)}
+.seg .sx{font-size:23px;color:var(--red);font-weight:900}
+.seg .sp{font-size:8.8px;font-weight:700;letter-spacing:.05em;color:var(--tx2)}
+.seg.win .sp{color:rgba(46,230,168,.9)}
+.seg.hit{outline:3px solid var(--gold);outline-offset:1px;animation:impact .38s ease}
+@keyframes impact{0%{transform:scale(1)}35%{transform:scale(1.1)}100%{transform:scale(1)}}
+.bracket{position:absolute;top:4px;bottom:4px;left:50%;width:76px;transform:translateX(-50%);z-index:4;pointer-events:none;
+  border:3px solid var(--gold);border-radius:4px;box-shadow:0 0 0 3px rgba(0,0,0,.6),0 0 16px rgba(255,194,51,.4)}
+.bracket::before,.bracket::after{content:'';position:absolute;left:50%;transform:translateX(-50%);width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent}
+.bracket::before{top:-11px;border-top:9px solid var(--gold)}
+.bracket::after{bottom:-11px;border-bottom:9px solid var(--gold)}
+
+/* ===== CHANCE ===== */
+.chrow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.chbtn{background:var(--steel);border:1.5px solid var(--line);border-radius:6px;padding:11px 6px;text-align:center}
+.chbtn .cp{font-family:'Unbounded';font-weight:700;font-size:16px}
+.chbtn .cm{font-size:10.5px;color:var(--tx2);margin-top:3px}
+.chbtn.on{border-color:var(--gold);background:var(--gold)}
+.chbtn.on .cp{color:#141002}
+.chbtn.on .cm{color:rgba(20,16,2,.65)}
+.betline{display:flex;justify-content:space-between;margin-top:12px;padding:0 4px;font-size:12.5px;color:var(--tx2)}
+.betline b{color:var(--tx)}
+
+/* ===== CTA ===== */
+.cta{margin-top:14px;height:58px;border-radius:6px;background:var(--gold);border:2px solid #8a5c00;
+  color:#141002;font-family:'Unbounded';font-weight:900;font-size:15.5px;letter-spacing:.1em;text-transform:uppercase;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 5px 0 #8a5c00,0 12px 24px rgba(0,0,0,.55)}
+.cta:disabled{opacity:.5;box-shadow:none}
+.fairline{margin-top:10px;display:flex;justify-content:center;align-items:center;gap:6px;font-size:11px;color:var(--tx2)}
+.fairline .fh{color:var(--gold);font-weight:700}
+
+/* ===== MARKET ===== */
+.searchbox{display:flex;align-items:center;gap:9px;background:var(--steel);border:1.5px solid var(--line);border-radius:7px;padding:11px 13px;margin-bottom:11px}
+.searchbox svg{flex-shrink:0;opacity:.55}
+.searchbox input{flex:1;background:none;border:none;outline:none;color:var(--tx);font-family:inherit;font-size:14px;font-weight:600}
+.searchbox input::placeholder{color:rgba(154,164,196,.5)}
+.chips{display:flex;gap:7px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;font-size:11.5px;font-weight:700;color:var(--tx2);background:var(--steel);border:1.5px solid var(--line);border-radius:999px;padding:7px 13px}
+.chip.on{color:#141002;background:var(--gold);border-color:var(--gold)}
+.mgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.mcard{position:relative;background:var(--steel);border:1.5px solid var(--line);border-radius:8px;padding:9px 8px 10px;display:flex;flex-direction:column;align-items:center;gap:7px}
+.mcard .rdot{position:absolute;top:9px;left:9px;width:7px;height:7px;border-radius:50%;box-shadow:0 0 9px currentColor}
+.mcard .mart{width:52px;height:52px;border-radius:6px;object-fit:cover;background:rgba(255,255,255,.04)}
+.mcard .mname{font-size:10px;font-weight:700;text-align:center;line-height:1.25;min-height:24px;display:flex;align-items:center}
+.mcard .mmeta{display:flex;align-items:center;gap:4px;font-size:10.5px;font-weight:800;color:var(--gold)}
+.mcard .mmeta .msup{color:var(--tx2);font-weight:600;font-size:9.5px}
+
+/* ===== PROFILE ===== */
+.pchip{display:flex;align-items:center;gap:12px;background:var(--steel);border:1.5px solid var(--line);border-radius:9px;padding:14px}
+.pava{width:50px;height:50px;border-radius:7px;background:linear-gradient(135deg,var(--vio),var(--blue));display:flex;align-items:center;justify-content:center;font-family:'Unbounded';font-weight:900;font-size:20px;overflow:hidden;flex-shrink:0}
+.pava img{width:100%;height:100%;object-fit:cover}
+.pchip .pn{font-weight:800;font-size:15px}
+.pchip .pu{font-size:11.5px;color:var(--tx2);margin-top:2px}
+.statgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:11px}
+.stat{background:var(--steel);border:1.5px solid var(--line);border-radius:7px;padding:11px 4px;text-align:center}
+.stat .sv{font-family:'Unbounded';font-weight:700;font-size:14.5px}
+.stat .sl{font-size:8.7px;letter-spacing:.09em;color:var(--tx2);margin-top:4px;font-weight:700}
+.walletcard{margin-top:11px;background:linear-gradient(135deg,rgba(77,156,255,.14),rgba(124,92,255,.10));border:1px solid rgba(77,156,255,.35);border-radius:8px;padding:14px;display:flex;align-items:center;gap:11px}
+.walletcard .wicon{width:38px;height:38px;border-radius:5px;background:rgba(77,156,255,.18);display:flex;align-items:center;justify-content:center}
+.walletcard .wt{font-weight:800;font-size:13px}
+.walletcard .ws{font-size:11px;color:var(--tx2);margin-top:2px;word-break:break-all}
+.sect{margin-top:14px}
+.sect h3{font-size:13px;font-weight:700;letter-spacing:.03em;margin:0 2px 9px;display:flex;align-items:center;gap:7px}
+.sect h3 .sc{margin-left:auto;font-size:10.5px;color:var(--tx2);font-weight:600;font-family:'Manrope'}
+.invgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.inv{position:relative;background:var(--steel);border:1.5px solid var(--line);border-radius:7px;padding:8px;display:flex;flex-direction:column;align-items:center;gap:5px}
+.inv img{width:48px;height:48px;border-radius:5px;object-fit:cover}
+.inv .n{font-size:9.5px;font-weight:700;text-align:center;line-height:1.2}
+.inv .v{font-size:9.5px;font-weight:800;color:var(--gold)}
+.inv .c{position:absolute;top:-6px;right:-4px;background:var(--gold);color:#141002;font-size:9.5px;font-weight:800;border-radius:999px;padding:2px 7px}
+.hrow{display:flex;align-items:center;gap:11px;background:var(--steel);border:1.5px solid var(--line);border-radius:7px;padding:10px 12px;margin-bottom:7px}
+.hico{width:30px;height:30px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0}
+.hico.w{background:rgba(46,230,168,.14);color:var(--green)}
+.hico.l{background:rgba(255,93,122,.12);color:var(--red)}
+.hrow .t{flex:1;min-width:0;font-size:12.8px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hrow .t small{display:block;font-size:10px;color:var(--tx2);font-weight:600;margin-top:2px}
+.hrow .d{font-weight:800;font-size:12.5px}
+.hrow .d.w{color:var(--green)} .hrow .d.l{color:var(--red)}
+.empty{grid-column:1/-1;text-align:center;color:var(--tx2);font-size:12.5px;padding:26px 0}
+.refillbig{margin-top:13px;height:52px;border-radius:7px;border:1.5px solid var(--gold);color:var(--gold);
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13.5px;letter-spacing:.04em;background:rgba(255,201,77,.06)}
+.demonote{margin-top:9px;text-align:center;font-size:10.3px;color:rgba(154,164,196,.7)}
+
+/* ===== NAV ===== */
+nav{position:fixed;bottom:0;left:0;right:0;z-index:30;padding:8px 14px calc(10px + env(safe-area-inset-bottom));
+  background:linear-gradient(180deg,transparent,rgba(5,3,15,.94) 38%)}
+.nin{max-width:520px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:7px;
+  background:rgba(10,9,12,.92);border:1.5px solid var(--line);border-radius:8px;padding:8px;backdrop-filter:blur(16px)}
+.nbtn{padding:11px 4px;border-radius:7px;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--tx2);font-size:10.3px;font-weight:700}
+.nbtn svg{opacity:.8}
+.nbtn.on{background:linear-gradient(135deg,rgba(255,201,77,.16),rgba(255,201,77,.07));color:var(--gold)}
+.nbtn.on svg{opacity:1}
+
+/* ===== SHEET ===== */
+#ovl{position:fixed;inset:0;z-index:40;background:rgba(2,1,8,.66);opacity:0;pointer-events:none;transition:opacity .22s;backdrop-filter:blur(3px)}
+#ovl.on{opacity:1;pointer-events:auto}
+#sheet{position:fixed;left:0;right:0;bottom:0;z-index:41;background:#0d0a1e;border:1px solid var(--line);border-bottom:none;
+  border-radius:12px 12px 0 0;padding:20px 18px calc(22px + env(safe-area-inset-bottom));transform:translateY(104%);transition:transform .3s cubic-bezier(.2,.8,.25,1);max-height:86vh;overflow-y:auto}
+#sheet.on{transform:none}
+.grab{width:40px;height:4.5px;border-radius:45px;background:rgba(255,255,255,.18);margin:0 auto 15px}
+.shart{width:120px;height:120px;border-radius:12px;object-fit:cover;margin:0 auto 13px;display:block;background:rgba(255,255,255,.05)}
+.shname{font-family:'Unbounded';font-weight:700;font-size:17px;text-align:center;margin-bottom:5px}
+.shsub{font-size:12px;color:var(--tx2);text-align:center}
+.shbadges{display:flex;gap:7px;justify-content:center;margin:12px 0 4px;flex-wrap:wrap}
+.badge{font-size:10.5px;font-weight:700;border:1px solid;border-radius:999px;padding:5px 11px}
+.shbtns{display:flex;gap:9px;margin-top:15px}
+.shbtn{flex:1;height:48px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12.8px}
+.shbtn.pri{background:linear-gradient(135deg,#ffd76a,#ffb43d);color:#141002}
+.shbtn.sec{background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--tx)}
+.fairbox{margin-top:11px;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:6px;padding:11px 13px;font-size:11px;color:var(--tx2);word-break:break-all;line-height:1.55}
+
+/* ===== TOAST ===== */
+#toast{position:fixed;left:50%;bottom:calc(88px + env(safe-area-inset-bottom));transform:translate(-50%,18px);z-index:50;
+  background:rgba(16,13,34,.95);border:1px solid var(--line);border-radius:6px;padding:11px 17px;font-size:12.8px;font-weight:700;
+  opacity:0;pointer-events:none;transition:.25s;max-width:86vw;text-align:center;backdrop-filter:blur(10px)}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+#toast.w{border-color:rgba(46,230,168,.5)}
+#toast.l{border-color:rgba(255,93,122,.5)}
+
+/* ===== CONFETTI ===== */
+.cf{position:fixed;z-index:60;top:-12px;border-radius:4px;pointer-events:none;animation:fall 1.3s ease-in forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(540deg);opacity:.4}}
+@media(max-width:360px){.mgrid,.invgrid{grid-template-columns:repeat(2,1fr)}}
+
+/* ===== v6 EXTRAS ===== */
+.mutebtn{width:34px;height:34px;border-radius:7px;background:var(--steel);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:15px}
+.modebtn{height:34px;padding:0 10px;border-radius:6px;background:rgba(46,230,168,.1);border:1.5px solid rgba(46,230,168,.45);color:var(--green);font-family:'Unbounded';font-size:8.5px;font-weight:900;letter-spacing:.08em;display:flex;align-items:center}
+.jackbar{margin-top:12px;display:flex;align-items:center;gap:7px;justify-content:center;background:rgba(255,47,78,.07);border:1.5px solid rgba(255,47,78,.35);border-radius:6px;padding:8px 10px;font-size:10.5px;font-weight:800;letter-spacing:.09em;color:var(--tx)}
+.jackbar .jd{width:7px;height:7px;border-radius:50%;background:#ff2f4e;animation:jpulse 1.2s infinite}
+.jackbar b{color:#ff2f4e;font-family:'Unbounded';font-size:13px}
+@keyframes jpulse{0%,100%{opacity:1}50%{opacity:.25}}
+.feedwrap{margin-top:12px}
+.feedhead{display:flex;align-items:center;gap:6px;font-size:9.5px;font-weight:800;letter-spacing:.09em;color:var(--tx2);margin-bottom:7px}
+.feedhead .fdot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:jpulse 1.6s infinite}
+.feedline{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.feedline::-webkit-scrollbar{display:none}
+.fcard{flex-shrink:0;width:84px;background:var(--steel);border:1.5px solid var(--line);border-radius:8px;padding:7px;text-align:center;animation:fcardin .3s ease}
+@keyframes fcardin{0%{opacity:0;transform:translateX(8px) scale(.94)}100%{opacity:1;transform:none}}
+.fcard img{width:38px;height:38px;border-radius:7px;object-fit:cover;margin:0 auto 5px;display:block}
+.fcard .fn{font-size:9px;font-weight:700;color:var(--tx2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fcard .fg{font-size:9.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.fcard .fv{font-size:10px;font-weight:900;color:var(--gold);margin-top:3px}
+.pnavbtn{width:26px;height:86px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:22px;font-weight:900;flex-shrink:0}
+.autorow{display:flex;align-items:center;gap:7px;margin-top:10px;justify-content:center;flex-wrap:wrap}
+.alab{font-size:9.5px;font-weight:800;letter-spacing:.09em;color:var(--tx2)}
+.abtn{font-size:11px;font-weight:800;padding:6px 11px;border-radius:5px;background:var(--steel);border:1.5px solid var(--line);color:var(--tx2)}
+.abtn.on{background:var(--gold);color:#141002;border-color:var(--gold)}
+.abtn.stop{background:#ff2f4e;color:#fff;border-color:#ff2f4e}
+.bigwin{position:fixed;inset:0;z-index:80;background:rgba(2,2,6,.86);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:20px}
+.bigwin.on{display:flex}
+.bwcard{width:100%;max-width:340px;background:var(--steel);border:2px solid var(--gold);border-radius:10px;padding:26px 18px;text-align:center;animation:bwin .35s ease}
+@keyframes bwin{0%{transform:scale(.7);opacity:0}100%{transform:scale(1);opacity:1}}
+.bwcard img{width:110px;height:110px;border-radius:10px;object-fit:cover;margin:0 auto 14px}
+.bwcard .bwt{font-family:'Unbounded';font-weight:900;font-size:12px;letter-spacing:.14em;color:var(--gold)}
+.bwcard .bwn{font-family:'Unbounded';font-weight:800;font-size:16px;margin-top:10px}
+.bwcard .bwv{font-family:'Unbounded';font-weight:900;font-size:25px;color:var(--gold);margin-top:8px}
+.bwcard .bws{font-size:10.5px;color:var(--tx2);margin-top:6px}
+.bwcard .bwbtns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:18px}
+.sellbtn{font-size:9px;font-weight:800;color:#ff2f4e;border:1.5px solid rgba(255,47,78,.4);border-radius:5px;padding:4px 6px;margin-top:5px;text-align:center}
+body.light{--bg:#f2efe7;--tx:#171520;--tx2:#5e6275;--line:rgba(0,0,0,.13);--steel:#ffffff;--card:#ffffff}
+body.light::before{opacity:.4}
+body.light .reelwrap{background:#e8e4d9}
+body.light .nin{background:rgba(255,255,255,.94)}
+body.light header{background:linear-gradient(180deg,rgba(242,239,231,.95),rgba(242,239,231,.8) 70%,transparent)}
+body.light .cta{color:#141002}
+</style>
+</head>
+<body>
+
+<div class="ver">v8.1 · 22.09</div>
+<script>
+// Self-heal watchdog: on a slow/broken connection the page can load only partway
+// (truncated HTML/JS) and leave placeholder dashes forever. Detect that and reload once.
+(function () {
+  try {
+    var K = 'nf_reload_guard';
+    var done = false;
+    function reloadOnce() {
+      if (done) return; done = true;
+      if (!sessionStorage.getItem(K)) {
+        sessionStorage.setItem(K, '1');
+        location.reload();
+      }
+    }
+    window.addEventListener('error', reloadOnce);
+    setTimeout(function () {
+      var pn = document.getElementById('prizename');
+      if (pn && pn.textContent === '—') reloadOnce();
+      else sessionStorage.removeItem(K); // loaded fine — clear guard for next time
+    }, 4500);
+  } catch (e) {}
+})();
+</script>
+
+<header><div class="hin">
+  <div class="logo"><span class="l1">NEWS<b>NFT</b></span><span class="l2">PREMIUM GIFTS</span></div>
+  <div class="hgrow"></div>
+  <div class="mutebtn" id="mutebtn" data-act="mute">🔊</div>
+  <div class="modebtn" data-act="refill" style="background:rgba(255,201,77,.12);border-color:rgba(255,201,77,.45);color:var(--gold)">+ TON</div>
+  <div class="balchip">
+    <span class="bn" id="balv">—</span>
+    <svg width="13" height="13" viewBox="0 0 24 24"><path d="M12 2l8.66 5v10L12 22l-8.66-5V7L12 2z" fill="#ffd76a"/><path d="M12 6.5l4.33 2.5v5L12 16.5l-4.33-2.5v-5L12 6.5z" fill="#05030f" opacity=".85"/></svg>
+    <div class="bplus" data-act="refill">+</div>
+  </div>
+</div></header>
+
+<div class="wrap">
+
+  <!-- ===== UPGRADE ===== -->
+  <section class="view on" id="v-up">
+    <div class="vhead"><h2 class="unb">Апгрейд подарка</h2></div>
+    <div class="jackbar"><span class="jd"></span>ДЖЕКПОТ <b id="jackval">—</b> TON</div>
+    <div class="feedwrap">
+      <div class="feedhead"><span class="fdot"></span>СЕЙЧАС ВЫИГРЫВАЮТ</div>
+      <div class="feedline" id="feedline"></div>
+    </div>
+    <div class="pcard">
+      <div class="prow">
+        <div class="pnavbtn" data-act="prevprize">‹</div>
+        <div class="pimgbox"><img id="prizeimg" alt=""></div>
+        <div class="pinfo">
+          <div class="pname" id="prizename">—</div>
+          <div class="psub">floor-цена Fragment · снос по шансу</div>
+          <div class="pfloor"><svg width="12" height="12" viewBox="0 0 24 24"><path d="M12 2l8.66 5v10L12 22l-8.66-5V7L12 2z" fill="#ffd76a"/></svg><span id="prizefloor">—</span> <small>TON</small></div>
+        </div>
+        <div class="pnavbtn" data-act="nextprize">›</div>
+      </div>
+      <div class="pchangelink" data-act="tab" data-tab="v-mk">выбрать другой приз →</div>
+      <div class="reelwrap" id="reelwrap">
+        <div class="bracket"></div>
+        <div class="reelmask" id="reelmask"><div class="reeltrack" id="reeltrack"></div></div>
+      </div>
+      <div class="chrow" id="chrow" style="grid-template-columns:repeat(5,1fr);gap:5px">
+        <div class="chbtn" data-act="chance" data-c="5"><div class="cp">5%</div><div class="cm">×17</div></div>
+        <div class="chbtn" data-act="chance" data-c="10"><div class="cp">10%</div><div class="cm">×8.5</div></div>
+        <div class="chbtn on" data-act="chance" data-c="25"><div class="cp">25%</div><div class="cm">×3.4</div></div>
+        <div class="chbtn" data-act="chance" data-c="50"><div class="cp">50%</div><div class="cm">×1.7</div></div>
+        <div class="chbtn" data-act="chance" data-c="75"><div class="cp">75%</div><div class="cm">×1.13</div></div>
+      </div>
+      <div class="betline"><span>ставка <b id="betval">—</b></span><span>выигрыш <b id="winval">—</b></span></div>
+    </div>
+    <button class="cta" id="spinbtn" data-act="spin">КРУТИТЬ</button>
+    <div class="autorow" id="autorow"><span class="alab">АВТОСПИН</span><span class="alab" id="autocnt"></span>
+      <div class="abtn" data-act="auto" data-n="10">10</div>
+      <div class="abtn" data-act="auto" data-n="25">25</div>
+      <div class="abtn" data-act="auto" data-n="0">∞</div>
+      <div class="abtn stop" data-act="autoStop" style="display:none">СТОП</div>
+    </div>
+    <div class="fairline" data-act="fair">ПРОВЕРИТЬ ЧЕСТНОСТЬ · hash <span class="fh" id="fairhash">—</span> · SHA-256</div>
+  </section>
+
+  <!-- ===== MARKET ===== -->
+  <section class="view" id="v-mk">
+    <div class="vhead"><h2 class="unb">Маркет</h2><span class="sub" id="mcount">—</span></div>
+    <div class="searchbox">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9aa4c4" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      <input id="msearch" placeholder="Поиск подарка…" autocomplete="off">
+    </div>
+    <div class="chips" id="chips">
+      <div class="chip on" data-act="sort" data-s="floorasc">Цена ↑</div>
+      <div class="chip" data-act="sort" data-s="floordesc">Цена ↓</div>
+      <div class="chip" data-act="sort" data-s="name">А-Я</div>
+      <div class="chip" data-act="sort" data-s="supply">Тираж</div>
+    </div>
+    <div class="mgrid" id="mgrid"></div>
+  </section>
+
+  <!-- ===== PROFILE ===== -->
+  <section class="view" id="v-pf">
+    <div class="vhead"><h2 class="unb">Профиль</h2><span class="sub">коллекция и статистика</span></div>
+    <div class="pchip">
+      <div class="pava" id="pava">N</div>
+      <div style="flex:1;min-width:0">
+        <div class="pn" id="pname">Гость</div>
+        <div class="pu" id="puname">гость</div>
+        <div class="pu" id="pid" style="margin-top:1px">ID: —</div>
+      </div>
+    </div>
+    <div class="statgrid">
+      <div class="stat"><div class="sv" id="st-spins">0</div><div class="sl">СПИНЫ</div></div>
+      <div class="stat"><div class="sv" id="st-wins">0</div><div class="sl">ПОБЕДЫ</div></div>
+      <div class="stat"><div class="sv" id="st-wr">0%</div><div class="sl">ВИНРЕЙТ</div></div>
+      <div class="stat"><div class="sv" id="st-inv">0</div><div class="sl">КОЛЛЕКЦИЯ</div></div>
+    </div>
+    <div class="walletcard" id="wcard" data-act="wallet">
+      <div class="wicon"><svg width="19" height="19" viewBox="0 0 24 24"><path d="M12 2l8.66 5v10L12 22l-8.66-5V7L12 2z" fill="#4d9cff"/></svg></div>
+      <div style="flex:1;min-width:0">
+        <div class="wt" id="wtitle">Подключить кошелёк</div>
+        <div class="ws" id="wsub">TON Connect 2 · Tonkeeper, Telegram Wallet…</div>
+      </div>
+    </div>
+    <div class="sect"><h3 class="unb">МОИ ПОДАРКИ <span class="sc" id="invcnt"></span></h3><div class="invgrid" id="invgrid"></div></div>
+    <div class="sect"><h3 class="unb">КРАФТ ПОДАРКОВ</h3>
+      <div style="font-size:11.5px;color:var(--tx2);margin-bottom:10px;line-height:1.4">Минимум <b>3 подарка</b> на сумму от <b>5 TON</b>. Результат — случайный множитель <b style="color:var(--gold)">от 10% до 240%</b> от вложенной суммы. Может выпасть меньше, может в 2.4 раза больше.</div>
+      <div class="refillbig" data-act="craft" style="margin-top:0;background:linear-gradient(135deg,rgba(124,92,255,.18),rgba(255,201,77,.12));border-color:rgba(124,92,255,.45);color:var(--tx)">⚗️ ОТКРЫТЬ КРАФТ</div>
+    </div>
+    <div class="sect"><h3 class="unb">ИСТОРИЯ <span class="sc">последние 40</span></h3><div id="hist"></div></div>
+    <div class="refillbig" data-act="refill">ПОПОЛНИТЬ БАЛАНС</div>
+    <div class="demonote">Реальный баланс · TON Connect 2 · пополнение через кошелёк</div>
+  </section>
+
+</div>
+
+<div class="bigwin" id="bigwin" data-act="closeWin"><div class="bwcard" id="bwcard"></div></div>
+
+<nav><div class="nin">
+  <div class="nbtn on" data-act="tab" data-tab="v-up">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3v13M6 10l6 6 6-6"/><path d="M4 21h16"/></svg>
+    Апгрейд</div>
+  <div class="nbtn" data-act="tab" data-tab="v-mk">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="8" r="3.2"/><circle cx="16" cy="10" r="2.6"/><path d="M3.5 19c.6-3 3-4.5 5.5-4.5s4.9 1.5 5.5 4.5M15 18.5c.4-2 1.7-3 3.2-3s2.8 1 3.2 3"/></svg>
+    Маркет</div>
+  <div class="nbtn" data-act="tab" data-tab="v-pf">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="8" r="3.4"/><path d="M4.5 20c1-3.6 4-5.3 7.5-5.3s6.5 1.7 7.5 5.3"/></svg>
+    Профиль</div>
+</div></nav>
+
+<div id="ovl" data-act="closeSheet"></div>
+<div id="sheet"><div class="grab"></div><div id="sheetbody"></div></div>
+<div id="toast"></div>
+
+<script>
+/* ===== 0. ГЛОБАЛЬНАЯ ЗАЩИТА ===== */
+function beacon(m, s) { try { console.warn('[nf]', String(m).slice(0, 300), String(s || '').slice(0, 400)); } catch (e) {} }
+window.addEventListener('error', e => beacon(e.message, e.error && e.error.stack));
+window.addEventListener('unhandledrejection', e => beacon('rejection:' + e.reason));
+function die(msg) { try { toast('Ошибка: ' + msg + ' — сообщи в бот', 'l'); } catch (e) {} }
+
+/* ===== 1. ДАННЫЕ ===== */
+const GIFTS = [{"slug":"artisanbrick","display":"Artisan Bricks","supply":2929,"floor":79},{"slug":"astralshard","display":"Astral Shards","supply":2931,"floor":138},{"slug":"bdaycandle","display":"B-Day Candles","supply":23681,"floor":5},{"slug":"berrybox","display":"Berry Boxes","supply":8848,"floor":9},{"slug":"bigyear","display":"Big Years","supply":12133,"floor":5},{"slug":"blingbinky","display":"Bling Binkies","supply":2062,"floor":28},{"slug":"bondedring","display":"Bonded Rings","supply":2922,"floor":47},{"slug":"bowtie","display":"Bow Ties","supply":8408,"floor":6},{"slug":"bunnymuffin","display":"Bunny Muffins","supply":6534,"floor":9},{"slug":"candycane","display":"Candy Canes","supply":15556,"floor":5},{"slug":"chillflame","display":"Chill Flames","supply":40196,"floor":5},{"slug":"cloverpin","display":"Clover Pins","supply":18306,"floor":6},{"slug":"cookieheart","display":"Cookie Hearts","supply":13210,"floor":5},{"slug":"crystalball","display":"Crystal Balls","supply":8280,"floor":14},{"slug":"cupidcharm","display":"Cupid Charms","supply":5800,"floor":24},{"slug":"deskcalendar","display":"Desk Calendars","supply":33371,"floor":5},{"slug":"diamondring","display":"Diamond Rings","supply":8444,"floor":33},{"slug":"durovscap","display":"Durov’s Caps","supply":3158,"floor":450},{"slug":"durovsglasses","display":"Durov’s Glasses","supply":491,"floor":96},{"slug":"easteregg","display":"Easter Eggs","supply":26674,"floor":5},{"slug":"electricskull","display":"Electric Skulls","supply":4300,"floor":28},{"slug":"eternalcandle","display":"Eternal Candles","supply":12272,"floor":7},{"slug":"eternalrose","display":"Eternal Roses","supply":5578,"floor":30},{"slug":"evileye","display":"Evil Eyes","supply":18298,"floor":8},{"slug":"faithamulet","display":"Faith Amulets","supply":11462,"floor":7},{"slug":"finepen","display":"Fine Pens","supply":1999,"floor":9},{"slug":"flyingbroom","display":"Flying Brooms","supply":6674,"floor":14},{"slug":"freshsocks","display":"Fresh Socks","supply":11354,"floor":5},{"slug":"gemsignet","display":"Gem Signets","supply":2143,"floor":69},{"slug":"genielamp","display":"Genie Lamps","supply":2705,"floor":40},{"slug":"gingercookie","display":"Ginger Cookies","supply":17445,"floor":5},{"slug":"hangingstar","display":"Hanging Stars","supply":6761,"floor":10},{"slug":"happybrownie","display":"Happy Brownies","supply":10690,"floor":5},{"slug":"heartlocket","display":"Heart Lockets","supply":1317,"floor":1379},{"slug":"heroichelmet","display":"Heroic Helmets","supply":1301,"floor":205},{"slug":"hexpot","display":"Hex Pots","supply":14396,"floor":5},{"slug":"holidaydrink","display":"Holiday Drinks","supply":6182,"floor":5},{"slug":"homemadecake","display":"Homemade Cakes","supply":32926,"floor":6},{"slug":"hypnolollipop","display":"Hypno Lollipops","supply":8601,"floor":5},{"slug":"icecream","display":"Ice Creams","supply":34383,"floor":5},{"slug":"inputkey","display":"Input Keys","supply":13846,"floor":7},{"slug":"instantramen","display":"Instant Ramens","supply":23313,"floor":5},{"slug":"iongem","display":"Ion Gems","supply":2666,"floor":72},{"slug":"ionicdryer","display":"Ionic Dryers","supply":2604,"floor":17},{"slug":"jackinthebox","display":"Jacks-in-the-Box","supply":16241,"floor":6},{"slug":"jellybunny","display":"Jelly Bunnies","supply":13724,"floor":8},{"slug":"jesterhat","display":"Jester Hats","supply":12572,"floor":5},{"slug":"jinglebells","display":"Jingle Bells","supply":8378,"floor":9},{"slug":"jollychimp","display":"Jolly Chimps","supply":14678,"floor":8},{"slug":"joyfulbundle","display":"Joyful Bundles","supply":3810,"floor":10},{"slug":"khabibspapakha","display":"Khabib’s Papakhas","supply":3337,"floor":29},{"slug":"kissedfrog","display":"Kissed Frogs","supply":7610,"floor":55},{"slug":"libertyfigure","display":"Liberty Figures","supply":18217,"floor":5},{"slug":"lightsword","display":"Light Swords","supply":16591,"floor":7},{"slug":"lolpop","display":"Lol Pops","supply":66807,"floor":5},{"slug":"lootbag","display":"Loot Bags","supply":6524,"floor":148},{"slug":"lovecandle","display":"Love Candles","supply":3137,"floor":11},{"slug":"lovepotion","display":"Love Potions","supply":6608,"floor":16},{"slug":"lowrider","display":"Low Riders","supply":6680,"floor":61},{"slug":"lunarsnake","display":"Lunar Snakes","supply":18071,"floor":5},{"slug":"lushbouquet","display":"Lush Bouquets","supply":6208,"floor":6},{"slug":"madpumpkin","display":"Mad Pumpkins","supply":6597,"floor":14},{"slug":"magicpotion","display":"Magic Potions","supply":3300,"floor":60},{"slug":"mightyarm","display":"Mighty Arms","supply":1817,"floor":128},{"slug":"minioscar","display":"Mini Oscars","supply":2143,"floor":82},{"slug":"moneypot","display":"Money Pots","supply":9059,"floor":6},{"slug":"moodpack","display":"Mood Packs","supply":13989,"floor":5},{"slug":"moonpendant","display":"Moon Pendants","supply":13040,"floor":7},{"slug":"moussecake","display":"Mousse Cakes","supply":7263,"floor":6},{"slug":"nailbracelet","display":"Nail Bracelets","supply":1888,"floor":124},{"slug":"nekohelmet","display":"Neko Helmets","supply":4123,"floor":39},{"slug":"partysparkler","display":"Party Sparklers","supply":21008,"floor":5},{"slug":"perfumebottle","display":"Perfume Bottles","supply":2143,"floor":80},{"slug":"petsnake","display":"Pet Snakes","supply":10991,"floor":5},{"slug":"plushpepe","display":"Plush Pepes","supply":2470,"floor":6666},{"slug":"poolfloat","display":"Pool Floats","supply":13890,"floor":5},{"slug":"preciouspeach","display":"Precious Peaches","supply":2138,"floor":323},{"slug":"prettyposy","display":"Pretty Posies","supply":2932,"floor":6},{"slug":"rarebird","display":"Rare Birds","supply":3551,"floor":30},{"slug":"recordplayer","display":"Record Players","supply":5410,"floor":14},{"slug":"restlessjar","display":"Restless Jars","supply":9194,"floor":6},{"slug":"sakuraflower","display":"Sakura Flowers","supply":13787,"floor":11},{"slug":"santahat","display":"Santa Hats","supply":12216,"floor":6},{"slug":"scaredcat","display":"Scared Cats","supply":14260,"floor":285},{"slug":"sharptongue","display":"Sharp Tongues","supply":3860,"floor":54},{"slug":"signetring","display":"Signet Rings","supply":7199,"floor":36},{"slug":"skullflower","display":"Skull Flowers","supply":6994,"floor":12},{"slug":"skystilettos","display":"Sky Stilettos","supply":5877,"floor":20},{"slug":"sleighbell","display":"Sleigh Bells","supply":4120,"floor":8},{"slug":"snakebox","display":"Snake Boxes","supply":9420,"floor":5},{"slug":"snoopcigar","display":"Snoop Cigars","supply":17892,"floor":15},{"slug":"snoopdogg","display":"Snoop Doggs","supply":54956,"floor":6},{"slug":"snowglobe","display":"Snow Globes","supply":6241,"floor":6},{"slug":"snowmittens","display":"Snow Mittens","supply":4872,"floor":6},{"slug":"spicedwine","display":"Spiced Wines","supply":12004,"floor":6},{"slug":"springbasket","display":"Spring Baskets","supply":12417,"floor":6},{"slug":"spyagaric","display":"Spy Agarics","supply":28860,"floor":7},{"slug":"starnotepad","display":"Star Notepads","supply":8882,"floor":5},{"slug":"stellarrocket","display":"Stellar Rockets","supply":16168,"floor":6},{"slug":"surgeboard","display":"Surge Boards","supply":2489,"floor":8},{"slug":"swagbag","display":"Swag Bags","supply":20148,"floor":6},{"slug":"swisswatch","display":"Swiss Watches","supply":10730,"floor":59},{"slug":"tamagadget","display":"Tama Gadgets","supply":10814,"floor":5},{"slug":"timelessbook","display":"Timeless Books","supply":7881,"floor":5},{"slug":"tophat","display":"Top Hats","supply":8462,"floor":12},{"slug":"toybear","display":"Toy Bears","supply":29347,"floor":40},{"slug":"trappedheart","display":"Trapped Hearts","supply":9682,"floor":18},{"slug":"ufcstrike","display":"UFC Strikes","supply":6385,"floor":17},{"slug":"valentinebox","display":"Valentine Boxes","supply":3790,"floor":12},{"slug":"vicecream","display":"Vice Creams","supply":41603,"floor":5},{"slug":"victorymedal","display":"Victory Medals","supply":14061,"floor":5},{"slug":"vintagecigar","display":"Vintage Cigars","supply":8818,"floor":50},{"slug":"voodoodoll","display":"Voodoo Dolls","supply":10937,"floor":38},{"slug":"westsidesign","display":"Westside Signs","supply":5241,"floor":119},{"slug":"whipcupcake","display":"Whip Cupcakes","supply":14278,"floor":5},{"slug":"winterwreath","display":"Winter Wreaths","supply":9346,"floor":5},{"slug":"witchhat","display":"Witch Hats","supply":30904,"floor":9},{"slug":"xmasstocking","display":"Xmas Stockings","supply":14741,"floor":5}];
+const ART = s => `https://nft.fragment.com/collection/${s}.webp`;
+const THUMB = s => `https://fragment.com/file/gifts/${s}/thumb.webp`;
+const PH = 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96"><rect width="96" height="96" rx="20" fill="#131029"/><text x="48" y="58" font-size="34" text-anchor="middle">🎁</text></svg>`);
+const imgtag = (slug, w) => `<img loading="lazy" src="${THUMB(slug)}" onerror="this.onerror=null;this.src='${ART(slug)}';this.addEventListener('error',()=>{this.src='${PH}'},{once:true})" ${w ? `style="width:${w}px;height:${w}px;object-fit:cover;border-radius:13px"` : ''} alt="">`;
+const bySlug = {}; GIFTS.forEach(g => bySlug[g.slug] = g);
+const RAR = [
+  { max: 5, name: 'Обычный', cls: '#9aa4c4' },
+  { max: 30, name: 'Необычный', cls: '#4d9cff' },
+  { max: 120, name: 'Редкий', cls: '#7c5cff' },
+  { max: 1200, name: 'Эпический', cls: '#2ee6a8' },
+  { max: 12000, name: 'Легендарный', cls: '#ffc94d' },
+  { max: 1e15, name: 'Мифический', cls: '#ff5d7a' },
+];
+const rarOf = f => RAR.find(r => f < r.max) || RAR[4];
+const fmt = n => n >= 1000 ? (n >= 10000 ? Math.round(n).toLocaleString('ru-RU') : n.toLocaleString('ru-RU', { maximumFractionDigits: 1 })) : (Math.round(n * 1000) / 1000).toLocaleString('ru-RU', { maximumFractionDigits: 3 });
+const fmtFloor = n => Number(n).toLocaleString('ru-RU', { minimumFractionDigits: Number.isInteger(Number(n)) ? 2 : 0, maximumFractionDigits: 3 });
+
+/* ===== 2. SAFE STORAGE (не падает, даже если localStorage заблокирован) ===== */
+const memS = {};
+const store = {
+  get(k) { try { return localStorage.getItem(k); } catch (e) { return memS[k] || null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch (e) { memS[k] = v; } },
+};
+
+/* ===== 3. TELEGRAM ===== */
+let tg = null;
+try { tg = window.Telegram && window.Telegram.WebApp; if (tg) { tg.ready(); tg.expand(); try { tg.setHeaderColor('#05030f'); tg.setBackgroundColor('#05030f'); } catch (e) {} } } catch (e) { beacon('tg init: ' + e); }
+const tgUser = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) || null;
+
+/* ===== 4. STATE ===== */
+const LS = 'newsnft_v5';
+let S = { bal: 50, target: 'plushpepe', chance: 25, spins: 0, wins: 0, inv: {}, hist: [], wallet: null, walletFull: null };
+try { Object.assign(S, JSON.parse(store.get(LS) || '{}')); } catch (e) { beacon('state parse: ' + e); }
+const save = () => store.set(LS, JSON.stringify(S));
+if (S.target === 'prettyposey') { S.target = 'prettyposy'; save(); }
+if (S.jackpot == null) S.jackpot = 500;
+if (S.mute == null) S.mute = 0;
+if (typeof S.bal !== 'number' || S.bal > 100000) S.bal = 50; // migrate from demo ∞
+const PRICED = [...GIFTS].sort((a, b) => b.floor - a.floor);
+const RARE_POOL = PRICED.slice(0, 8);
+const RANK_OF = {}; PRICED.forEach((x, i) => RANK_OF[x.slug] = i + 1);
+
+/* ===== 5. DOM helpers ===== */
+const $ = id => document.getElementById(id);
+let toastT;
+function toast(msg, cls) { const t = $('toast'); t.textContent = msg; t.className = 'on ' + (cls || ''); clearTimeout(toastT); toastT = setTimeout(() => t.className = '', 2400); }
+function haptic(k) { try { if (k === 'win') tg.HapticFeedback.notificationOccurred('success'); else if (k === 'lose') tg.HapticFeedback.notificationOccurred('error'); else tg.HapticFeedback.impactOccurred('medium'); } catch (e) {} }
+function confetti() {
+  const cols = ['#ffc94d', '#2ee6a8', '#8b5cf6', '#4d9cff', '#ff5d7a'];
+  for (let i = 0; i < 40; i++) {
+    const c = document.createElement('div'); c.className = 'cf';
+    const s = 5 + Math.random() * 7;
+    c.style.cssText = `left:${Math.random() * 100}vw;top:34vh;width:${s}px;height:${s}px;background:${cols[i % 5]};animation-delay:${Math.random() * .25}s`;
+    document.body.appendChild(c); setTimeout(() => c.remove(), 1500);
+  }
+}
+
+/* ===== 5b. SOUND + AUTO + BIGWIN + FEED + THEME ===== */
+let AC = null;
+function sfx(type) {
+  if (S.mute) return;
+  try {
+    AC = AC || new (window.AudioContext || window.webkitAudioContext)();
+    if (AC.state === 'suspended') AC.resume();
+    const t0 = AC.currentTime;
+    const beep = (f, st, d, ty, g) => { const o = AC.createOscillator(), ga = AC.createGain(); o.type = ty; o.frequency.value = f; ga.gain.setValueAtTime(g, t0 + st); ga.gain.exponentialRampToValueAtTime(.001, t0 + st + d); o.connect(ga); ga.connect(AC.destination); o.start(t0 + st); o.stop(t0 + st + d); };
+    if (type === 'tick') beep(1250, 0, .03, 'square', .025);
+    else if (type === 'win') [523, 659, 784, 1047].forEach((f, i) => beep(f, i * .09, .22, 'triangle', .09));
+    else if (type === 'lose') beep(170, 0, .22, 'sawtooth', .05);
+    else if (type === 'rare') [523, 659, 784, 1047, 1319, 1568].forEach((f, i) => beep(f, i * .08, .4, 'triangle', .1));
+    else if (type === 'jackpot') [392, 523, 659, 784, 1047, 1319, 2093].forEach((f, i) => beep(f, i * .09, .5, 'square', .07));
+  } catch (e) {}
+}
+function renderJack() { const j = $('jackval'); if (j) j.textContent = fmt(S.jackpot); }
+let auto = null; // {inf:bool, left:number}
+function updateAutoUI() {
+  document.querySelectorAll('.abtn[data-n]').forEach(x => x.classList.toggle('on', !!auto && ((auto.inf && x.dataset.n === '0') || (!auto.inf && +x.dataset.n === auto.total))));
+  const sb = document.querySelector('.abtn.stop'); if (sb) sb.style.display = auto ? '' : 'none';
+  const c = $('autocnt'); if (c) c.textContent = auto ? (auto.inf ? '∞' : 'осталось ' + auto.left) : '';
+}
+function startAuto(n) { auto = n === 0 ? { inf: true, left: Infinity, total: 0 } : { inf: false, left: n, total: n }; updateAutoUI(); if (!spinning) doSpin(); }
+function stopAuto(msg) { auto = null; updateAutoUI(); if (msg) toast(msg); }
+function showBigWin(g, kind, amount) {
+  $('bwcard').innerHTML = `
+    <img src="${THUMB(g.slug)}" onerror="this.onerror=null;this.src='${ART(g.slug)}'" alt="">
+    <div class="bwt">${kind === 'rare' ? '★ РЕДКИЙ ПРИЗ ★' : kind === 'jackpot' ? 'ДЖЕКПОТ' : 'ПОЗДРАВЛЯЕМ'}</div>
+    <div class="bwn">${g.display}</div>
+    <div class="bwv">+${fmt(amount)} TON</div>
+    <div class="bws">${kind === 'rare' ? 'шанс 1% · редчайший подарок в коллекции' : kind === 'jackpot' ? 'джекпот обнулён и зачислен на баланс' : 'подарок зачислен в коллекцию'}</div>
+    <div class="bwbtns"><div class="cta" style="margin:0;height:46px;font-size:13px" data-act="again">КРУТИТЬ ЕЩЁ</div><div class="shbtn sec" data-act="closeWin">ЗАБРАТЬ</div></div>`;
+  $('bigwin').classList.add('on');
+}
+function cyclePrize(dir) {
+  const list = [...GIFTS].sort((a, b) => a.floor - b.floor);
+  let i = list.findIndex(x => x.slug === S.target); if (i < 0) i = 0;
+  i = (i + dir + list.length) % list.length;
+  S.target = list[i].slug; save(); renderUpgrade(); sfx('tick'); haptic();
+}
+const FEED_NAMES = ['crypto_wolf', 'tonik997', 'nikita_gifts', 'durov_fan', 'max_ton', 'GiftHunter', 'anna.ton', 'cryptowhale777', 'leo_nft', 'sasha_gifts', 'tonmaster', 'pepe_king'];
+let feedTimer = null;
+function feedLoop() {
+  const fl = $('feedline'); if (!fl) return;
+  const g = GIFTS[Math.floor(Math.random() * GIFTS.length)];
+  const nm = FEED_NAMES[Math.floor(Math.random() * FEED_NAMES.length)];
+  const card = document.createElement('div');
+  card.className = 'fcard';
+  card.innerHTML = `${imgtag(g.slug)}<div class="fn">@${nm}</div><div class="fg">${g.display}</div><div class="fv">+${fmtFloor(g.floor)}</div>`;
+  fl.insertBefore(card, fl.firstChild);
+  while (fl.children.length > 10) fl.removeChild(fl.lastChild);
+  clearTimeout(feedTimer); feedTimer = setTimeout(feedLoop, 4000 + Math.random() * 5000);
+}
+function applyTheme() { let light = false; try { light = !!tg && tg.colorScheme === 'light'; } catch (e) {} document.body.classList.toggle('light', light); }
+
+/* ===== 6. SHEET ===== */
+function openSheet(html) { $('sheetbody').innerHTML = html; $('ovl').classList.add('on'); $('sheet').classList.add('on'); document.body.style.overflow = 'hidden'; }
+function closeSheet() { $('ovl').classList.remove('on'); $('sheet').classList.remove('on'); document.body.style.overflow = ''; }
+if (tg && tg.BackButton) tg.BackButton.onClick(closeSheet);
+
+/* ===== 6b. CRAFT (random 10% … 240%) ===== */
+const CRAFT_MIN_N = 3;
+const CRAFT_MIN_SUM = 5;
+const CRAFT_MULT_MIN = 0.10; // 10%
+const CRAFT_MULT_MAX = 2.40; // 240%
+let craftSelected = {}; // slug -> count selected
+
+function openCraftSheet() {
+  craftSelected = {};
+  renderCraftUI();
+}
+
+function renderCraftUI() {
+  const entries = Object.entries(S.inv).filter(([, n]) => n > 0);
+  let selCount = 0, selSum = 0;
+  Object.entries(craftSelected).forEach(([slug, cnt]) => {
+    const g = bySlug[slug];
+    if (g) { selCount += cnt; selSum += g.floor * cnt; }
+  });
+  const can = selCount >= CRAFT_MIN_N && selSum >= CRAFT_MIN_SUM;
+  const rangeLow = selSum * CRAFT_MULT_MIN;
+  const rangeHigh = selSum * CRAFT_MULT_MAX;
+  const listHtml = entries.length ? entries.map(([slug, n]) => {
+    const g = bySlug[slug] || { display: slug, floor: 0 };
+    const sel = craftSelected[slug] || 0;
+    return `<div style="display:flex;align-items:center;gap:10px;background:var(--steel);border:1.5px solid var(--line);border-radius:7px;padding:8px 10px;margin-bottom:6px">
+      ${imgtag(slug, 36)}
+      <div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700">${g.display}</div>
+      <div style="font-size:10px;color:var(--tx2)">${fmtFloor(g.floor)} TON · есть ×${n}</div></div>
+      <div style="display:flex;align-items:center;gap:6px">
+        <div class="abtn" style="padding:4px 8px" data-act="craftDec" data-slug="${slug}">−</div>
+        <span style="font-weight:800;min-width:16px;text-align:center">${sel}</span>
+        <div class="abtn" style="padding:4px 8px" data-act="craftInc" data-slug="${slug}">+</div>
+      </div></div>`;
+  }).join('') : '<div class="empty">Нет подарков для крафта — сначала выиграйте в апгрейде</div>';
+
+  openSheet(`
+    <div class="shname" style="font-size:15px">⚗️ Крафт подарков</div>
+    <div class="shsub">Минимум ${CRAFT_MIN_N} подарка · сумма от ${CRAFT_MIN_SUM} TON</div>
+    <div class="fairbox" style="margin:12px 0 10px;border-color:rgba(124,92,255,.4)">
+      <b style="color:var(--vio)">РАНДОМНЫЙ РЕЗУЛЬТАТ</b><br>
+      Множитель от <b style="color:var(--gold)">10%</b> до <b style="color:var(--gold)">240%</b> от суммы вложения.<br>
+      Пример: вложили 6.666 TON → может выпасть ~0.67 TON (10%) или до ~16 TON (240%).
+    </div>
+    <div style="font-size:12px;margin-bottom:8px">
+      Выбрано: <b>${selCount}</b> шт · сумма <b style="color:var(--gold)">${fmtFloor(selSum)}</b> TON
+      ${can
+        ? `<br><span style="color:var(--green)">✓ можно крафтить · диапазон результата ≈ ${fmtFloor(rangeLow)} – ${fmtFloor(rangeHigh)} TON</span>`
+        : `<br><span style="color:var(--red)">нужно ≥${CRAFT_MIN_N} шт и ≥${CRAFT_MIN_SUM} TON</span>`}
+    </div>
+    <div style="max-height:38vh;overflow-y:auto">${listHtml}</div>
+    <div class="shbtns" style="margin-top:14px">
+      <div class="shbtn pri ${can ? '' : 'disabled'}" style="${can ? 'background:linear-gradient(135deg,#7c5cff,#ffc94d);color:#141002' : 'opacity:.4;pointer-events:none'}" data-act="doCraft">СКРАФТИТЬ</div>
+      <div class="shbtn sec" data-act="closeSheet">ОТМЕНА</div>
+    </div>`);
+}
+
+function doCraft() {
+  let selCount = 0, selSum = 0;
+  const used = [];
+  Object.entries(craftSelected).forEach(([slug, cnt]) => {
+    const g = bySlug[slug];
+    if (g && cnt > 0 && (S.inv[slug] || 0) >= cnt) {
+      selCount += cnt;
+      selSum += g.floor * cnt;
+      used.push({ slug, cnt, floor: g.floor });
+    }
+  });
+  if (selCount < CRAFT_MIN_N || selSum < CRAFT_MIN_SUM) {
+    toast('Не хватает подарков или суммы (мин. 3 шт / 5 TON)', 'l');
+    return;
+  }
+
+  // consume gifts
+  used.forEach(u => {
+    S.inv[u.slug] = (S.inv[u.slug] || 0) - u.cnt;
+    if (S.inv[u.slug] <= 0) delete S.inv[u.slug];
+  });
+
+  // random multiplier 10% … 240%
+  const mult = CRAFT_MULT_MIN + Math.random() * (CRAFT_MULT_MAX - CRAFT_MULT_MIN);
+  const targetFloor = selSum * mult;
+
+  // pick closest gift by floor
+  const sorted = [...GIFTS].sort((a, b) => Math.abs(a.floor - targetFloor) - Math.abs(b.floor - targetFloor));
+  const result = sorted[0] || GIFTS[0];
+
+  S.inv[result.slug] = (S.inv[result.slug] || 0) + 1;
+  S.hist.unshift({
+    w: 1,
+    g: result.slug,
+    v: result.floor,
+    b: selSum,
+    t: Date.now(),
+    craft: true,
+    mult: Math.round(mult * 100)
+  });
+  save();
+  closeSheet();
+  renderProfile();
+  renderBal();
+
+  const pct = Math.round(mult * 100);
+  const isGood = mult >= 1;
+  if (isGood) {
+    confetti();
+    sfx('rare');
+    haptic('win');
+    toast(`Крафт ×${pct}%! ${result.display} · ${fmtFloor(result.floor)} TON`, 'w');
+    showBigWin(result, mult >= 1.5 ? 'rare' : 'win', result.floor);
+  } else {
+    sfx('lose');
+    haptic('lose');
+    toast(`Крафт ×${pct}% · ${result.display} · ${fmtFloor(result.floor)} TON`, 'l');
+  }
+}
+
+/* ===== 7. REEL / FAIR ===== */
+const CARD = 72, CARD_W = 66; // 66px card + 6px gap
+const STRIP_N = 40, TARGET_MIN = 28, TARGET_MAX = 35;
+function reelCenterOffset() {
+  const mask = $('reelmask'); const w = (mask && mask.clientWidth) || 0;
+  return w / 2 - CARD_W / 2; // px offset that puts a card's CENTER exactly under the bracket
+}
+const MULT = { 5: 20, 10: 10, 25: 4, 50: 2, 75: 1.33 }; // fair multipliers (approx)
+const RTP = 0.85; // house keeps 15%: effective payout = MULT * RTP
+let spinning = false, curSeed = null, curCommit = null, lastSeed = null, lastCommit = null, lastRoll = null, lastChance = null, lastResult = null, spinT = null;
+
+async function sha256hex(s) {
+  const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+  return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join('');
+}
+function rndHex(n) { const a = new Uint8Array(n); crypto.getRandomValues(a); return [...a].map(x => x.toString(16).padStart(2, '0')).join(''); }
+async function refreshCommit() { try { curSeed = rndHex(16); curCommit = await sha256hex(curSeed); $('fairhash').textContent = curCommit.slice(0, 10) + '…'; } catch (e) { beacon('sha: ' + e); } }
+
+function buildStrip(chance, forcedIdx, forcedWin) {
+  const winCount = Math.max(1, Math.min(STRIP_N - 1, Math.round(STRIP_N * chance / 100)));
+  const arr = new Array(STRIP_N).fill(false);
+  for (let i = 0; i < winCount; i++) arr[Math.floor(i * STRIP_N / winCount)] = true;
+  for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; }
+  if (forcedIdx != null) arr[forcedIdx] = forcedWin;
+  return arr;
+}
+function renderStrip(arr, g, idleIdx) {
+  const tr = $('reeltrack');
+  tr.style.transition = 'none';
+  tr.style.transform = `translateX(${idleIdx != null ? (reelCenterOffset() - idleIdx * CARD) : 0}px)`;
+  tr.innerHTML = arr.map(win => win
+    ? `<div class="seg win">${imgtag(g.slug)}<div class="sp">${fmtFloor(g.floor)}</div></div>`
+    : `<div class="seg lose"><div class="sx">✕</div><div class="sp">мимо</div></div>`).join('');
+}
+function gift() { return bySlug[S.target] || GIFTS[0]; }
+function renderUpgrade() {
+  const g = gift();
+  $('prizeimg').src = THUMB(g.slug);
+  $('prizeimg').onerror = () => { $('prizeimg').onerror = null; $('prizeimg').src = ART(g.slug); };
+  $('prizename').textContent = g.display;
+  $('prizefloor').textContent = fmtFloor(g.floor);
+  const bet = Math.max(0.5, Math.round((g.floor / (MULT[S.chance] * RTP)) * 10) / 10);
+  $('betval').textContent = fmt(bet) + ' TON';
+  $('winval').textContent = fmtFloor(g.floor) + ' TON';
+  document.querySelectorAll('.chbtn').forEach(x => x.classList.toggle('on', +x.dataset.c === S.chance));
+  if (!spinning) renderStrip(buildStrip(S.chance), g, Math.floor(STRIP_N / 2));
+}
+async function doSpin() {
+  if (spinning) return;
+  const g = gift();
+  const bet = Math.max(0.5, Math.round((g.floor / (MULT[S.chance] * RTP)) * 10) / 10);
+  if (S.bal < bet) { toast('Недостаточно TON · пополните баланс', 'l'); return; }
+  spinning = true;
+  const btn = $('spinbtn'); btn.disabled = true; btn.textContent = '…';
+  $('reelwrap').classList.remove('win', 'lose');
+  S.bal = Math.round((S.bal - bet) * 1000) / 1000;
+  renderBal();
+  let h, roll;
+  try { h = curCommit || await sha256hex(curSeed || 'x'); roll = parseInt(h.slice(0, 8), 16) % 100; }
+  catch (e) { beacon('spin sha fail: ' + e); h = String(Math.random()); roll = Math.floor(Math.random() * 100); }
+  const r2 = h.length >= 16 ? parseInt(h.slice(8, 16), 16) % 10000 : Math.floor(Math.random() * 10000);
+  const isWin = roll < S.chance;
+  const isRare = isWin && r2 < 100; // редкий приз только внутри выигрышного исхода
+  const isJack = isWin && !isRare && r2 < 130; // джекпот только внутри выигрышного исхода
+  lastSeed = curSeed || 'x'; lastCommit = h; lastRoll = roll; lastChance = S.chance; lastResult = isWin;
+  const targetIdx = TARGET_MIN + Math.floor(Math.random() * (TARGET_MAX - TARGET_MIN + 1));
+  const winG = isRare ? RARE_POOL[targetIdx % RARE_POOL.length] : g;
+  renderStrip(buildStrip(S.chance, targetIdx, isWin), winG);
+  const tx = reelCenterOffset() - targetIdx * CARD; // exact card-center landing under the bracket, no drift
+  requestAnimationFrame(() => { const tr = $('reeltrack'); tr.style.transition = 'transform 4.6s cubic-bezier(.1,.75,.15,1)'; tr.style.transform = `translateX(${tx}px)`; });
+  clearInterval(spinT); spinT = setInterval(() => sfx('tick'), 170);
+  haptic();
+  setTimeout(() => {
+    spinning = false; btn.disabled = false; btn.textContent = 'КРУТИТЬ ЕЩЁ';
+    clearInterval(spinT);
+    S.spins++;
+    S.jackpot = Math.round((S.jackpot + Math.max(0.1, bet * 0.01)) * 10) / 10;
+    const seg = document.querySelectorAll('#reeltrack .seg')[targetIdx];
+    if (seg) seg.classList.add('hit');
+    if (isJack) {
+      const jp = S.jackpot; S.jackpot = 500;
+      S.bal = Math.round((S.bal + jp) * 1000) / 1000;
+      S.wins++; S.hist.unshift({ w: 1, g: g.slug, v: jp, b: bet, t: Date.now() });
+      $('reelwrap').classList.add('win'); confetti(); haptic('win'); sfx('jackpot');
+      toast(`ДЖЕКПОТ! +${fmt(jp)} TON на баланс`, 'w');
+      if (!auto) showBigWin(g, 'jackpot', jp);
+    } else if (isRare) {
+      const rg = winG;
+      S.wins++; S.inv[rg.slug] = (S.inv[rg.slug] || 0) + 1;
+      S.hist.unshift({ w: 1, g: rg.slug, v: rg.floor, b: bet, t: Date.now() });
+      $('reelwrap').classList.add('win'); confetti(); haptic('win'); sfx('rare');
+      toast(`★ РЕДКИЙ ПРИЗ! ${rg.display} · ${fmtFloor(rg.floor)} TON`, 'w');
+      if (!auto) showBigWin(rg, 'rare', rg.floor);
+    } else if (isWin) {
+      S.wins++; S.inv[g.slug] = (S.inv[g.slug] || 0) + 1;
+      S.hist.unshift({ w: 1, g: g.slug, v: g.floor, b: bet, t: Date.now() });
+      $('reelwrap').classList.add('win'); confetti(); haptic('win'); sfx('win');
+      toast(`Линия на зелёном! ${g.display} · ${fmtFloor(g.floor)} TON`, 'w');
+      if (!auto) showBigWin(g, 'win', g.floor);
+    } else {
+      S.hist.unshift({ w: 0, g: g.slug, v: 0, b: bet, t: Date.now() });
+      $('reelwrap').classList.add('lose'); haptic('lose'); sfx('lose');
+      toast(`Мимо · ставка ${fmt(bet)} TON сгорела`, 'l');
+    }
+    S.hist = S.hist.slice(0, 40);
+    save(); renderBal(); renderProfile(); renderJack(); refreshCommit();
+    if (auto) {
+      if (!auto.inf) auto.left--;
+      updateAutoUI();
+      if (auto && (auto.inf || auto.left > 0)) setTimeout(doSpin, 900);
+      else stopAuto('Автоспин завершён');
+    }
+  }, 4750);
+}
+
+/* ===== 8. MARKET ===== */
+let msch = 'floorasc', mq = '';
+function renderMarket() {
+  let list = GIFTS.filter(g => !mq || g.display.toLowerCase().includes(mq) || g.slug.includes(mq));
+  if (msch === 'floorasc') list.sort((a, b) => a.floor - b.floor);
+  if (msch === 'floordesc') list.sort((a, b) => b.floor - a.floor);
+  if (msch === 'name') list.sort((a, b) => a.display.localeCompare(b.display));
+  if (msch === 'supply') list.sort((a, b) => (b.supply || 0) - (a.supply || 0));
+  $('mcount').textContent = `${list.length} коллекций · floor fragment.com`;
+  const grid = $('mgrid');
+  grid.innerHTML = list.map(g => {
+    const r = rarOf(g.floor);
+    return `<div class="mcard" data-act="gift" data-slug="${g.slug}">
+      <div class="rdot" style="background:${r.cls};color:${r.cls}"></div>
+      ${imgtag(g.slug)}
+      <div class="mname">${g.display}</div>
+      <div class="mmeta"><svg width="9" height="9" viewBox="0 0 24 24"><path d="M12 2l8.66 5v10L12 22l-8.66-5V7L12 2z" fill="#ffd76a"/></svg>${fmtFloor(g.floor)}<span class="msup">${g.supply ? g.supply.toLocaleString('ru-RU') : ''}</span></div>
+    </div>`;
+  }).join('');
+}
+function openGiftSheet(g) {
+  const r = rarOf(g.floor), isT = S.target === g.slug;
+  openSheet(`
+    ${imgtag(g.slug).replace('style="width:52px;height:52px;object-fit:cover;border-radius:13px"', '').replace('<img loading="lazy"', '<img class="shart"')}
+    <div class="shname">${g.display}</div>
+    <div class="shsub">floor ${fmtFloor(g.floor)} TON · тираж ${g.supply ? g.supply.toLocaleString('ru-RU') + ' шт' : '—'}</div>
+    <div class="shsub">топ-${RANK_OF[g.slug] || '—'} из ${GIFTS.length} по цене · шансы апгрейда честные</div>
+    <div class="shbadges">
+      <div class="badge" style="color:${r.cls};border-color:${r.cls}55;background:${r.cls}14">${r.name}</div>
+      ${isT ? '<div class="badge" style="color:#2ee6a8;border-color:#2ee6a855;background:#2ee6a814">ваш приз</div>' : ''}
+    </div>
+    <div class="shbtns">
+      <div class="shbtn pri" data-act="pick" data-slug="${g.slug}">${isT ? '✓ ВЫБРАН' : 'СДЕЛАТЬ ПРИЗОМ'}</div>
+      <div class="shbtn sec" data-act="fragment" data-slug="${g.slug}">FRAGMENT ↗</div>
+    </div>`);
+}
+
+/* ===== 9. PROFILE ===== */
+function renderBal() { $('balv').textContent = fmt(S.bal); }
+function renderUser() {
+  let name = 'Гость', ini = 'N', cat = 'гость';
+  if (tgUser) { name = [tgUser.first_name, tgUser.last_name].filter(Boolean).join(' ') || 'Игрок'; ini = (tgUser.first_name || 'N')[0].toUpperCase(); cat = '@' + (tgUser.username || 'id' + tgUser.id); }
+  const pa = $('pava');
+  if (tgUser && tgUser.photo_url) { pa.innerHTML = `<img src="${tgUser.photo_url}" style="width:100%;height:100%;object-fit:cover">`; }
+  else pa.textContent = ini;
+  $('pname').textContent = name; $('puname').textContent = cat;
+  $('pid').textContent = 'ID: ' + (tgUser ? tgUser.id : '—');
+}
+function renderProfile() {
+  $('st-spins').textContent = S.spins; $('st-wins').textContent = S.wins;
+  $('st-wr').textContent = S.spins ? Math.round(100 * S.wins / S.spins) + '%' : '0%';
+  const invTotal = Object.entries(S.inv).reduce((s, [slug, n]) => s + (bySlug[slug] ? bySlug[slug].floor * n : 0), 0);
+  $('st-inv').textContent = invTotal >= 1000 ? Math.round(invTotal / 100) / 10 + 'k' : fmt(invTotal);
+  const entries = Object.entries(S.inv).filter(([, n]) => n > 0);
+  $('invcnt').textContent = entries.length ? entries.reduce((s, [, n]) => s + n, 0) + ' шт' : '';
+  $('invgrid').innerHTML = entries.length ? entries.map(([slug, n]) => {
+    const g = bySlug[slug] || { display: slug, floor: 0 };
+    return `<div class="inv">${imgtag(slug)}<div class="n">${g.display}</div><div class="v">${fmtFloor(g.floor)} TON</div>${n > 1 ? `<div class="c">×${n}</div>` : ''}<div class="sellbtn" data-act="sell" data-slug="${slug}">продать · +${fmtFloor(g.floor)}</div></div>`;
+  }).join('') : '<div class="empty">Пока пусто — крути апгрейд</div>';
+  $('hist').innerHTML = S.hist.length ? S.hist.map(h => {
+    const g = bySlug[h.g] || { display: h.g };
+    const title = h.craft ? `Крафт ×${h.mult || '?'}%` : (h.w ? g.display : 'Мимо');
+    const sub = h.craft ? `${g.display} · вложено ${fmt(h.b)}` : g.display;
+    return `<div class="hrow"><div class="hico ${h.w ? 'w' : 'l'}">${h.craft ? '⚗️' : (h.w ? '↑' : '↓')}</div>
+      <div class="t">${title}<small>${new Date(h.t).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })} · ${sub}</small></div>
+      <div class="d ${h.w ? 'w' : 'l'}">${h.w ? '+' + fmt(h.v) : '−' + fmt(h.b)}</div></div>`;
+  }).join('') : '<div class="empty">История появится после первого спина</div>';
+  tcSyncUI();
+}
+
+/* ===== 10. TON CONNECT 2 (ленивая загрузка) ===== */
+const APP_URL = '';  // манифест теперь статика на Pages
+let tcUI = null, tcLoading = null;
+const tcShort = a => a.slice(0, 4) + '…' + a.slice(-4);
+function loadSDK() {
+  if (window.TON_CONNECT_UI) return Promise.resolve(true);
+  if (tcLoading) return tcLoading;
+  tcLoading = new Promise(res => {
+    const sc = document.createElement('script');
+    sc.src = 'https://cdn.jsdelivr.net/npm/@tonconnect/ui@3.0.2/dist/tonconnect-ui.min.js';
+    sc.onload = () => res(true); sc.onerror = () => res(false);
+    document.head.appendChild(sc);
+  });
+  return tcLoading;
+}
+async function tcInit() {
+  if (tcUI) return true;
+  const ok = await loadSDK();
+  if (!ok || !window.TON_CONNECT_UI) return false;
+  try {
+    tcUI = new window.TON_CONNECT_UI.TonConnectUI({ manifestUrl: 'tonconnect-manifest.json' });
+    let had = !!S.walletFull;
+    tcUI.onStatusChange(w => {
+      if (w && w.account) { S.wallet = tcShort(w.account.address); S.walletFull = w.account.address; save(); if (!had) toast('Кошелёк подключён ✓', 'w'); had = true; }
+      else { S.wallet = null; S.walletFull = null; save(); }
+      tcSyncUI();
+    });
+    return true;
+  } catch (e) { beacon('tc init: ' + e); return false; }
+}
+function tcSyncUI() {
+  $('wtitle').textContent = S.walletFull ? 'Кошелёк подключён' : 'Подключить кошелёк';
+  $('wsub').textContent = S.walletFull ? S.walletFull : 'TON Connect 2 · Tonkeeper, Telegram Wallet…';
+}
+async function onWallet() {
+  if (S.wallet && S.walletFull) {
+    openSheet(`
+      <div class="shname" style="font-size:15px">${S.wallet}</div>
+      <div class="shsub">TON Connect 2 · реальное подключение</div>
+      <div class="fairbox"><b>адрес:</b><br>${S.walletFull}</div>
+      <div class="shbtns"><div class="shbtn sec" data-act="closeSheet">Закрыть</div>
+      <div class="shbtn" style="background:#ff5d7a;color:#fff" data-act="tc-disconnect">Отключить</div></div>`);
+    return;
+  }
+  $('wtitle').textContent = 'Загрузка TON Connect…';
+  const ok = await tcInit();
+  if (!ok) { tcSyncUI(); toast('TON Connect не загрузился — проверь интернет', 'l'); return; }
+  tcSyncUI();
+  tcUI.openModal();
+}
+async function tcDisconnect() { try { if (tcUI) await tcUI.disconnect(); } catch (e) {} closeSheet(); toast('Кошелёк отключён'); }
+
+/* ===== 11. ЕДИНЫЙ ОБРАБОТЧИК КЛИКОВ (работает всегда) ===== */
+document.addEventListener('click', async e => {
+  const b = e.target.closest('[data-act]');
+  if (!b) return;
+  const a = b.dataset.act;
+  try {
+    if (a === 'refill') openSheet(`
+      <div class="shname" style="font-size:15px">Пополнение баланса</div>
+      <div class="shsub">Выберите сумму · TON зачислятся мгновенно (демо-сеть)</div>
+      <div class="fairbox">Текущий баланс: <b style="color:var(--gold)">${fmt(S.bal)} TON</b></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px">
+        <div class="shbtn pri" data-act="deposit" data-amt="5">+5 TON</div>
+        <div class="shbtn pri" data-act="deposit" data-amt="10">+10 TON</div>
+        <div class="shbtn pri" data-act="deposit" data-amt="25">+25 TON</div>
+        <div class="shbtn pri" data-act="deposit" data-amt="50">+50 TON</div>
+      </div>
+      <div class="fairbox" style="margin-top:12px;font-size:10.5px">В продакшене оплата идёт через TON Connect (Tonkeeper / Telegram Wallet). Сейчас — мгновенное зачисление для теста.</div>
+      <div class="shbtns"><div class="shbtn sec" data-act="closeSheet">ЗАКРЫТЬ</div></div>`);
+    else if (a === 'deposit') { const amt = +b.dataset.amt; S.bal = Math.round((S.bal + amt) * 1000) / 1000; save(); renderBal(); closeSheet(); toast(`+${amt} TON зачислено`, 'w'); sfx('win'); haptic('win'); }
+    else if (a === 'craft') openCraftSheet();
+    else if (a === 'craftInc') { const slug = b.dataset.slug; const max = S.inv[slug] || 0; craftSelected[slug] = Math.min(max, (craftSelected[slug] || 0) + 1); renderCraftUI(); }
+    else if (a === 'craftDec') { const slug = b.dataset.slug; craftSelected[slug] = Math.max(0, (craftSelected[slug] || 0) - 1); if (!craftSelected[slug]) delete craftSelected[slug]; renderCraftUI(); }
+    else if (a === 'doCraft') doCraft();
+    else if (a === 'tab') switchView(b.dataset.tab);
+    else if (a === 'chance') { if (spinning) return; S.chance = +b.dataset.c; save(); renderUpgrade(); haptic(); }
+    else if (a === 'spin') doSpin();
+    else if (a === 'sort') { document.querySelectorAll('.chip').forEach(x => x.classList.remove('on')); b.classList.add('on'); msch = b.dataset.s; renderMarket(); haptic(); }
+    else if (a === 'gift') openGiftSheet(bySlug[b.dataset.slug] || GIFTS[0]);
+    else if (a === 'pick') { S.target = b.dataset.slug; save(); closeSheet(); renderUpgrade(); switchView('v-up'); toast('Приз: ' + (bySlug[b.dataset.slug] || {}).display, 'w'); haptic(); }
+    else if (a === 'fragment') { const u = 'https://fragment.com/gifts/' + b.dataset.slug; if (tg && tg.openLink) tg.openLink(u); else window.open(u, '_blank'); }
+    else if (a === 'wallet') onWallet();
+    else if (a === 'tc-disconnect') tcDisconnect();
+    else if (a === 'closeSheet') closeSheet();
+    else if (a === 'mute') { S.mute = S.mute ? 0 : 1; save(); $('mutebtn').textContent = S.mute ? '🔇' : '🔊'; if (!S.mute) sfx('tick'); }
+    else if (a === 'prevprize') cyclePrize(-1);
+    else if (a === 'nextprize') cyclePrize(1);
+    else if (a === 'sell') { const g2 = bySlug[b.dataset.slug]; if (g2 && (S.inv[b.dataset.slug] || 0) > 0) { S.inv[b.dataset.slug]--; if (S.inv[b.dataset.slug] <= 0) delete S.inv[b.dataset.slug]; S.bal = Math.round((S.bal + g2.floor) * 1000) / 1000; save(); renderBal(); renderProfile(); sfx('win'); toast(`Продано · +${fmtFloor(g2.floor)} TON`, 'w'); } }
+    else if (a === 'auto') { if (auto) stopAuto('Автоспин остановлен'); else startAuto(+b.dataset.n); }
+    else if (a === 'autoStop') stopAuto('Автоспин остановлен');
+    else if (a === 'again') { $('bigwin').classList.remove('on'); doSpin(); }
+    else if (a === 'closeWin') $('bigwin').classList.remove('on');
+    else if (a === 'verifyFair') { const vh = await sha256hex(lastSeed || ''); const vr = parseInt(vh.slice(0, 8), 16) % 100; const ok = vh === lastCommit && vr === lastRoll; const vo = $('verifyout'); if (vo) { vo.textContent = ok ? '✓ Проверено: hash и результат совпадают' : '✕ Проверка не пройдена'; vo.style.color = ok ? 'var(--green)' : '#ff5d7a'; } }
+    else if (a === 'fair') openSheet(`
+      <div class="shname" style="font-size:15px">Проверка честности</div>
+      <div class="shsub">SHA-256 фиксирует результат до запуска линии</div>
+      <div class="fairbox"><b>HASH РАУНДА</b><br>${lastCommit || curCommit || '—'}</div>
+      <div class="fairbox"><b>SEED</b><br>${lastSeed || 'будет раскрыт после первого спина'}</div>
+      ${lastSeed ? `<div class="fairbox"><b>РАСЧЁТ</b><br>roll ${lastRoll} / шанс ${lastChance}% / ${lastResult ? 'ПОБЕДА' : 'МИМО'}<br><span id="verifyout">нажмите «Проверить»</span></div>` : ''}
+      <div class="shbtns">${lastSeed ? '<div class="shbtn pri" data-act="verifyFair">ПРОВЕРИТЬ SHA-256</div>' : ''}<div class="shbtn sec" data-act="closeSheet">ЗАКРЫТЬ</div></div>`);
+  } catch (err) { beacon('act ' + a + ': ' + err); toast('Сбой действия — уже вижу в логах', 'l'); }
+});
+function switchView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('on'));
+  document.querySelectorAll('.nbtn').forEach(x => x.classList.toggle('on', x.dataset.tab === id));
+  const v = $(id); if (v) v.classList.add('on');
+  window.scrollTo({ top: 0 }); haptic();
+}
+$('msearch').addEventListener('input', e => { mq = e.target.value.toLowerCase(); renderMarket(); });
+
+/* ===== 12. INIT ===== */
+try {
+  renderUser(); renderBal(); renderUpgrade(); renderMarket(); renderProfile(); refreshCommit();
+  renderJack(); applyTheme(); try { if (tg && tg.onEvent) tg.onEvent('themeChanged', applyTheme); } catch (e) {}
+  $('mutebtn').textContent = S.mute ? '🔇' : '🔊';
+  feedLoop();
+  const pc = document.querySelector('.pcard'); let tsx = null;
+  if (pc) { pc.addEventListener('touchstart', e => { tsx = e.touches[0].clientX; }, { passive: true }); pc.addEventListener('touchend', e => { if (tsx == null) return; const dx = e.changedTouches[0].clientX - tsx; if (Math.abs(dx) > 40) cyclePrize(dx < 0 ? 1 : -1); tsx = null; }, { passive: true }); }
+setTimeout(() => { if (S.walletFull) tcInit(); }, 3000);
+  (async () => {
+    try {
+      const r = await fetch('https://raw.githubusercontent.com/dostonravshanov1006800-beep/newsnft/main/data/floors.json' + '?cb=' + Date.now(), { cache: 'no-store' });
+      if (!r.ok) return;
+      const j = await r.json(); if (!j || !j.floors) return;
+      let ch = 0;
+      Object.entries(j.floors).forEach(([s, f]) => { const g = bySlug[s]; if (g && typeof f === 'number' && f > 0 && g.floor !== f) { g.floor = f; ch++; } });
+      if (ch) { renderUpgrade(); renderMarket(); renderProfile(); }
+    } catch (e) {}
+  })();
+} catch (e) {
+  beacon('init: ' + (e && e.stack));
+  die(e && e.message);
+}
+</script>
+</body>
+</html>
